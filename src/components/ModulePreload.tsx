@@ -1,14 +1,13 @@
 import { component$, sync$, useOnWindow } from "@builder.io/qwik";
-import { isDev } from "@builder.io/qwik/build";
 
 export const ModulePreload = component$(() => {
   useOnWindow(
     "DOMContentLoaded",
     sync$(async () => {
       const base = document.documentElement.getAttribute("q:base") ?? "/";
-      
+      const isDev = document.documentElement.getAttribute('q:render') === "ssr-dev";
       // Initialize SW & cache
-      if ("serviceWorker" in navigator && !document.querySelector('[q\\:render="ssr-dev"]')) {
+      if ("serviceWorker" in navigator && !isDev) {
         await navigator.serviceWorker.register("/sw.js");
         await navigator.serviceWorker.ready;
         const modules = document.querySelectorAll('link[rel="modulepreload"]');
@@ -44,10 +43,14 @@ export const ModulePreload = component$(() => {
     })
   );
 
+  const support = sync$(() => {
+    (window as any).supportsModulePreload = true;
+  })
+
   return <link
     rel="modulepreload"
     href="/modulepreload-support.js"
     fetchPriority="high"
-    onload="window.supportsModulePreload = true"
+    onLoad$={support}
   />
 })
