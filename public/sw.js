@@ -5,7 +5,7 @@ const main = async () => {
   });
   self.addEventListener("message", async (message) => {
     cache ||= await caches.open("QwikModulePreload");
-    if (message.data.type === "cache") {
+    if (message.data.type === "init") {
       const bundles = Array.from(new Set(message.data.value));
       cache.addAll(bundles);
     }
