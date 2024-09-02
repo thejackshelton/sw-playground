@@ -1,5 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { useDocumentHead, useLocation } from "@builder.io/qwik-city";
+import { useModulePreload } from "../useModulePreload";
 
 /**
  * The RouterHead component is placed inside of the document `<head>` element.
@@ -7,6 +8,7 @@ import { useDocumentHead, useLocation } from "@builder.io/qwik-city";
 export const RouterHead = component$(() => {
   const head = useDocumentHead();
   const loc = useLocation();
+  useModulePreload();
 
   return (
     <>

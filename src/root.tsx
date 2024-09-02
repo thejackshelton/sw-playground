@@ -2,7 +2,6 @@ import { component$ } from "@builder.io/qwik";
 import { QwikCityProvider, RouterOutlet } from "@builder.io/qwik-city";
 import { RouterHead } from "./components/router-head/router-head";
 import { isDev } from "@builder.io/qwik/build";
-import { ModulePreload } from "./components/ModulePreload";
 
 import "./global.css";
 
@@ -26,7 +25,6 @@ export default component$(() => {
           />
         )}
         <RouterHead />
-        <ModulePreload />
       </head>
       <body lang="en">
         <RouterOutlet />
